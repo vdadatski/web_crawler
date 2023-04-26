@@ -1,0 +1,23 @@
+version: '3'
+services:
+    php:
+        container_name: php
+        build: .docker
+        restart: always
+        ports:
+            - 2346:2346
+        networks:
+            - app-network
+        volumes:
+            - ./.docker/conf/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+            - ./.docker/conf/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+            - .:/var/www/html
+
+networks:
+    app-network:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.22.0.1/16
+
